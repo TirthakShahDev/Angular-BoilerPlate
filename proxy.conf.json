@@ -1,0 +1,9 @@
+{
+    "/dev-api": {
+        "target": "http://localhost:2222/mock-api/v1",
+        "secure": false,
+        "pathRewrite": {
+            "^/dev-api": ""
+        }
+    }
+}
