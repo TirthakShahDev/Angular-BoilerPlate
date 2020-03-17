@@ -6,6 +6,8 @@ import { User } from "../models";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { first } from "rxjs/operators";
 import { merge } from "rxjs";
+import { ToastrService } from "ngx-toastr";
+
 @Component({
 	selector: "app-login",
 	templateUrl: "./login.component.html",
@@ -22,10 +24,9 @@ export class LoginComponent implements OnInit {
 		private formBuilder: FormBuilder,
 		private route: ActivatedRoute,
 		private router: Router,
-		private authService: AuthService
+		private authService: AuthService,
+		private toastr: ToastrService
 	) {
-		console.log("constructor Called");
-
 		if (this.authService.isLoggedIn) {
 			this.router.navigate(["/dashboard"]);
 		}
@@ -52,7 +53,6 @@ export class LoginComponent implements OnInit {
 		if (this.loginForm.invalid) {
 			return;
 		}
-
 		this.loading = true;
 		this.authService
 			.login(this.f.username.value, this.f.password.value)
@@ -62,7 +62,6 @@ export class LoginComponent implements OnInit {
 					this.router.navigate([this.returnUrl]);
 				},
 				error => {
-					console.error(error);
 					this.loading = false;
 				}
 			);

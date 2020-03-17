@@ -37,6 +37,7 @@ export class AuthService {
 					if (user && user.data.accessToken) {
 						// store user details and jwt token in local storage to keep user logged in between page refreshes
 						localStorage.setItem("currentUser", JSON.stringify(user));
+						localStorage.setItem("token", user.data.accessToken);
 					}
 
 					return user;
@@ -45,17 +46,16 @@ export class AuthService {
 	}
 
 	getAccessToken() {
-		return localStorage.getItem("currentUser");
+		return localStorage.getItem("token");
 	}
 
 	get isLoggedIn(): boolean {
-		let currentUser = localStorage.getItem("currentUser");
-		return currentUser !== null ? true : false;
+		return this.getAccessToken() !== null ? true : false;
 	}
 
 	logout() {
-		debugger;
 		localStorage.removeItem("currentUser");
+		localStorage.removeItem("token");
 	}
 
 	getUserProfile(id: any): Observable<any> {
