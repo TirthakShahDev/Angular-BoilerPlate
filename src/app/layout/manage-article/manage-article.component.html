@@ -2,7 +2,9 @@
     <app-page-header [heading]="'Manage Article'" [icon]="'fa-table'"></app-page-header>
     <div class="row">
         <div class="col col-xl-6 col-lg-12">
-            <ngx-datatable [rows]="rows" [columns]="columns">
+            <ngx-datatable [rows]="rows" class="bootstrap" [loadingIndicator]="loadingIndicator" [columnMode]="'force'"
+                [headerHeight]="50" [footerHeight]="50" [rowHeight]="'auto'" [columns]="columns"
+                [reorderable]="reorderable">
             </ngx-datatable>
         </div>
     </div>

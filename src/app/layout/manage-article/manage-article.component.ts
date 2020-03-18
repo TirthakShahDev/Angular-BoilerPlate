@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { routerTransition } from "../../router.animations";
+import { ColumnMode } from "@swimlane/ngx-datatable";
 @Component({
 	selector: "app-manage-article",
 	templateUrl: "./manage-article.component.html",
@@ -7,6 +8,10 @@ import { routerTransition } from "../../router.animations";
 	animations: [routerTransition()]
 })
 export class ManageArticleComponent implements OnInit {
+	loadingIndicator = true;
+	reorderable = true;
+	ColumnMode = ColumnMode;
+
 	rows = [
 		{ name: "Austin", gender: "Male", company: "Swimlane" },
 		{ name: "Dany", gender: "Male", company: "KFC" },
