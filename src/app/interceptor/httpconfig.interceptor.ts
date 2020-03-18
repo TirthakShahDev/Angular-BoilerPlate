@@ -12,7 +12,7 @@ import { ToastrService } from "ngx-toastr";
 import { Observable, throwError } from "rxjs";
 import { map, catchError } from "rxjs/operators";
 
-@Injectable()
+@Injectable({ providedIn: "root" })
 export class HttpConfigInterceptor implements HttpInterceptor {
 	constructor(public toasterService: ToastrService) {}
 	intercept(

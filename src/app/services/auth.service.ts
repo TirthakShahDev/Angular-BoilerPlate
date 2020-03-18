@@ -7,7 +7,7 @@ import {
 	HttpErrorResponse
 } from "@angular/common/http";
 
-import { Observable, throwError, BehaviorSubject } from "rxjs";
+import { Observable, throwError } from "rxjs";
 import { catchError, map } from "rxjs/operators";
 
 import { User } from "../models";
