@@ -13,9 +13,7 @@ export class FormComponent implements OnInit {
 	registerForm: FormGroup;
 	submitted = false;
 
-	constructor(private formBuilder: FormBuilder) {
-		console.log(this.validation_messages);
-	}
+	constructor(private formBuilder: FormBuilder) {}
 	validation_messages = {
 		Title: [{ type: Validators.required.name, message: "Title is required" }],
 		firstName: [
@@ -76,7 +74,6 @@ export class FormComponent implements OnInit {
 	}
 	onSubmit() {
 		this.submitted = true;
-		debugger;
 		// stop here if form is invalid
 		if (this.registerForm.invalid) {
 			return;
