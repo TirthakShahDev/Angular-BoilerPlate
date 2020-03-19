@@ -12,7 +12,10 @@ import { catchError, map } from "rxjs/operators";
 
 import { User } from "../models";
 import { environment } from "../../environments/environment";
-
+import { ConvertAbility } from "../utils/AbilityConverter";
+import { RawRule } from "@casl/ability";
+import ability from "../abilityConfig/ability";
+import { json } from "body-parser";
 @Injectable({
 	providedIn: "root"
 })
@@ -33,11 +36,16 @@ export class AuthService {
 			.post<any>(`${this.API_URL}/users/login`, { UserName, password })
 			.pipe(
 				map(user => {
+					var permissions = user.data.permissions;
+					const abilities: RawRule[] = ConvertAbility(permissions);
+					ability.update(abilities);
+
 					// login successful if there's a jwt token in the response
 					if (user && user.data.accessToken) {
 						// store user details and jwt token in local storage to keep user logged in between page refreshes
 						localStorage.setItem("currentUser", JSON.stringify(user));
 						localStorage.setItem("token", user.data.accessToken);
+						localStorage.setItem("abilities", JSON.stringify(abilities));
 					}
 
 					return user;

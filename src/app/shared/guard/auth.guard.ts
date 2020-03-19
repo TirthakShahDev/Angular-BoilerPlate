@@ -7,6 +7,8 @@ import {
 } from "@angular/router";
 import { Router } from "@angular/router";
 import { AuthService } from "src/app/services/auth.service";
+import ability from "src/app/abilityConfig/ability";
+import { Common } from "src/app/Constants/Common";
 
 @Injectable()
 export class AuthGuard implements CanActivate, CanActivateChild {
@@ -15,6 +17,13 @@ export class AuthGuard implements CanActivate, CanActivateChild {
 		state: RouterStateSnapshot
 	) {
 		if (this.authService.isLoggedIn) {
+			if (
+				childRoute.data.module != undefined &&
+				!this.checkReadPermission(childRoute.data.module)
+			) {
+				this.router.navigate(["access-denied"]);
+				return false;
+			}
 			return true;
 		}
 
@@ -30,5 +39,9 @@ export class AuthGuard implements CanActivate, CanActivateChild {
 
 		this.router.navigate(["login"], { queryParams: { returnUrl: state.url } });
 		return false;
+	}
+
+	checkReadPermission(moduleName: string) {
+		return ability.can(Common.Actions.CAN_READ, moduleName);
 	}
 }

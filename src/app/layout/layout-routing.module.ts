@@ -2,6 +2,7 @@ import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
 import { LayoutComponent } from "./layout.component";
 import { AuthGuard } from "../shared/guard/auth.guard";
+import { Common } from "../Constants/Common";
 
 const routes: Routes = [
 	{
@@ -9,11 +10,17 @@ const routes: Routes = [
 		component: LayoutComponent,
 		canActivateChild: [AuthGuard],
 		children: [
-			{ path: "", redirectTo: "dashboard", pathMatch: "prefix" },
+			{
+				path: "",
+				redirectTo: "dashboard",
+				pathMatch: "prefix",
+				data: { module: Common.Modules.DASHBOARD }
+			},
 			{
 				path: "dashboard",
 				loadChildren: () =>
-					import("./dashboard/dashboard.module").then(m => m.DashboardModule)
+					import("./dashboard/dashboard.module").then(m => m.DashboardModule),
+				data: { module: Common.Modules.DASHBOARD }
 			},
 			{
 				path: "charts",
@@ -55,6 +62,14 @@ const routes: Routes = [
 				loadChildren: () =>
 					import("./manage-article/manage-article.module").then(
 						m => m.ManageArticleModule
+					),
+				data: { module: Common.Modules.ARTICLE }
+			},
+			{
+				path: "access-denied",
+				loadChildren: () =>
+					import("../access-denied/access-denied.module").then(
+						m => m.AccessDeniedModule
 					)
 			}
 		]

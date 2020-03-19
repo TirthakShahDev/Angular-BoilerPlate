@@ -2,11 +2,8 @@ import { Component, OnInit } from "@angular/core";
 import { Router, ActivatedRoute } from "@angular/router";
 import { routerTransition } from "../router.animations";
 import { AuthService } from "../services/auth.service";
-import { User } from "../models";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { first } from "rxjs/operators";
-import { merge } from "rxjs";
-import { ToastrService } from "ngx-toastr";
 
 @Component({
 	selector: "app-login",
@@ -24,8 +21,7 @@ export class LoginComponent implements OnInit {
 		private formBuilder: FormBuilder,
 		private route: ActivatedRoute,
 		private router: Router,
-		private authService: AuthService,
-		private toastr: ToastrService
+		private authService: AuthService
 	) {
 		if (this.authService.isLoggedIn) {
 			this.router.navigate(["/dashboard"]);
@@ -45,8 +41,6 @@ export class LoginComponent implements OnInit {
 		this.returnUrl = this.route.snapshot.queryParams["returnUrl"] || "/";
 	}
 
-	onLoggedin() {}
-
 	onSubmit() {
 		this.submitted = true;
 		// stop here if form is invalid
@@ -58,10 +52,10 @@ export class LoginComponent implements OnInit {
 			.login(this.f.username.value, this.f.password.value)
 			.pipe(first())
 			.subscribe(
-				data => {
+				() => {
 					this.router.navigate([this.returnUrl]);
 				},
-				error => {
+				() => {
 					this.loading = false;
 				}
 			);

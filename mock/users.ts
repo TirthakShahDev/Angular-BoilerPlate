@@ -55,7 +55,7 @@ const userList: IUserData[] = [
 			},
 			{
 				Module: "Article",
-				CanRead: true,
+				CanRead: false,
 				CanDelete: false,
 				CanUpdate: false,
 				CanExport: false,
@@ -111,7 +111,7 @@ for (let i = 2; i < userCount; i++) {
 		permissions: [
 			{
 				Module: "DashBoard",
-				CanRead: true,
+				CanRead: false,
 				CanDelete: true,
 				CanUpdate: true,
 				CanExport: true,

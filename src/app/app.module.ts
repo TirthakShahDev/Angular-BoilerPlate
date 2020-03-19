@@ -10,6 +10,8 @@ import { AppComponent } from "./app.component";
 import { AuthGuard } from "./shared";
 import { ToastrModule } from "ngx-toastr";
 import { HttpConfigInterceptor } from "./interceptor/httpconfig.interceptor";
+import { AbilityModule } from "@casl/angular";
+
 @NgModule({
 	imports: [
 		CommonModule,
@@ -18,7 +20,8 @@ import { HttpConfigInterceptor } from "./interceptor/httpconfig.interceptor";
 		HttpClientModule,
 		LanguageTranslationModule,
 		AppRoutingModule,
-		ToastrModule.forRoot()
+		ToastrModule.forRoot(),
+		AbilityModule.forRoot()
 	],
 	declarations: [AppComponent],
 	providers: [
