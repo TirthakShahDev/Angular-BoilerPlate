@@ -39,7 +39,7 @@ export const getArticles = (req: Request, res: Response) => {
 		return true;
 	});
 
-	if (sort === "-id") {
+	if (sort === "id-") {
 		mockList = mockList.reverse();
 	}
 	const pageList = mockList.filter(

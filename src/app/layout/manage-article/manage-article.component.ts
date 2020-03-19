@@ -4,6 +4,8 @@ import { ColumnMode } from "@swimlane/ngx-datatable";
 import { ArticleService } from "src/app/services/article.service";
 import { IArticleData } from "src/api/types";
 import { HttpParams } from "@angular/common/http";
+import { ConvertToTableFilter } from "src/app/utils";
+import { map } from "rxjs/operators";
 @Component({
 	selector: "app-manage-article",
 	templateUrl: "./manage-article.component.html",
@@ -19,15 +21,14 @@ export class ManageArticleComponent implements OnInit {
 	private listQuery = {
 		page: 1,
 		limit: 10,
-		sort: "+id"
+		sort: "+id",
+		title: ""
 	};
 
 	page = {
 		limit: 10,
 		count: 0,
-		offset: 0,
-		orderBy: "id",
-		orderDir: "desc"
+		offset: 0
 	};
 
 	constructor(private articleService: ArticleService) {}
@@ -36,11 +37,11 @@ export class ManageArticleComponent implements OnInit {
 		this.pageCallback({ offset: 1 });
 	}
 
-	editArticle(data) {
+	editArticle(data: IArticleData) {
 		console.log(data);
 	}
 
-	removeArticle(data) {
+	removeArticle(data: IArticleData) {
 		console.log(data);
 	}
 
@@ -53,22 +54,23 @@ export class ManageArticleComponent implements OnInit {
 		this.listQuery.page = pageInfo.offset;
 		this.reloadTable();
 	}
+
 	sortCallback(sortInfo: {
 		sorts: { dir: string; prop: string }[];
 		column: {};
 		prevValue: string;
 		newValue: string;
 	}) {
-		this.page.orderDir = sortInfo.sorts[0].dir;
-		this.page.orderBy = sortInfo.sorts[0].prop;
+		this.listQuery.sort = ConvertToTableFilter(
+			sortInfo.sorts[0].prop,
+			sortInfo.sorts[0].dir
+		);
 		this.reloadTable();
 	}
 
 	reloadTable() {
-		// NOTE: those params key values depends on your API!
-
 		this.articleService.getArticles(this.listQuery).subscribe((data: any) => {
-			this.rows = data.data.items;
+			this.rows = [...data.data.items];
 			this.page.count = data.data.total;
 		});
 	}
