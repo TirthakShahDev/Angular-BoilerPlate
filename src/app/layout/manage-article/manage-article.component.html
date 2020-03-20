@@ -1,19 +1,29 @@
 <div [@routerTransition]>
   <app-page-header [heading]="'Manage Article'" [icon]="'fa-table'"></app-page-header>
   <div class="row">
-    <div class="col col-md-12">
+    <div class="col col-md-2">
+      <input type="text" class="form-control" (input)="titlesearch=$event.target.value"
+        (keydown.enter)="reloadTable()" /> </div>
+    <div class="col col-md-2">
+      <button class="btn btn-xs btn-info mr-2" type="button" (click)="reloadTable()">
+        <i class="fa fa-search"></i> Search
+      </button>
       <button class="btn btn-xs btn-info" [routerLink]="['/add-article']" routerLinkActive="router-link-active"
         *ngIf="CanCreate">
-        <i class="fa fa-plus"></i>
+        <i class="fa fa-plus"></i> Add Article
       </button>
     </div>
+  </div>
+  <br />
+  <div class="row">
+
   </div>
   <div class="row">
     <div class="col col-md-12">
       <ngx-datatable [rows]="rows" class="bootstrap" [columnMode]="'force'" [headerHeight]="50" [footerHeight]="50"
         [rowHeight]="'auto'" [reorderable]="reorderable" (page)="pageCallback($event)" (sort)="sortCallback($event)"
         [externalPaging]="true" [externalSorting]="true" [count]="page.count" [offset]="page.offset"
-        [limit]="page.limit" [sortType]="'single'">
+        [limit]="page.limit" [sortType]="'single'" [loadingIndicator]="true">
         <ngx-datatable-column name="Id">
           <ng-template let-value="value" ngx-datatable-cell-template>
             {{ value }}

@@ -3,7 +3,7 @@ import { routerTransition } from "../../router.animations";
 import { ColumnMode } from "@swimlane/ngx-datatable";
 import { ArticleService } from "src/app/services/article.service";
 import { IArticleData } from "src/api/types";
-import { ConvertToTableFilter } from "src/app/utils";
+import { ConvertToTableFilter, parseTime } from "src/app/utils";
 import { Router } from "@angular/router";
 import { ToastrService } from "ngx-toastr";
 import * as _ from "lodash";
@@ -21,13 +21,13 @@ export class ManageArticleComponent extends BaseClass {
 	loadingIndicator = true;
 	reorderable = true;
 	ColumnMode = ColumnMode;
-
+	titlesearch = "";
 	rows: IArticleData[];
-	private listQuery = {
+	listQuery = {
 		page: 1,
 		limit: 10,
 		sort: "+id",
-		title: ""
+		title: this.titlesearch
 	};
 
 	page = {
@@ -109,7 +109,12 @@ export class ManageArticleComponent extends BaseClass {
 	}
 
 	reloadTable() {
+		this.listQuery.title = this.titlesearch;
 		this.articleService.getArticles(this.listQuery).subscribe((data: any) => {
+			_.forEach(data.data.items, (data: IArticleData) => {
+				data.timestamp = parseTime(data.timestamp, "{d}/{m}/{y}");
+			});
+
 			this.rows = [...data.data.items];
 			this.page.count = data.data.total;
 		});

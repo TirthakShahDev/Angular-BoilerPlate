@@ -19,8 +19,6 @@
               </div>
               <div class="form-group col-6">
                 <label>Time Stamp</label>
-                <!-- <input type="text" formControlName="timestamp" class="form-control"
-                  [ngClass]="{ 'is-invalid': submitted && f.timestamp.errors }" [(ngModel)]="articleModel.timestamp" /> -->
                 <div class="input-group datepicker-input">
                   <input type="text" class="form-control" placeholder="dd/mm/yyyy" formControlName="timestamp"
                     [(ngModel)]="articleModel.timestamp" ngbDatepicker #d="ngbDatepicker"

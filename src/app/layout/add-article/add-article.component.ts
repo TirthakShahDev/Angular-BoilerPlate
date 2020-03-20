@@ -10,7 +10,7 @@ import { parseTime } from "../../utils";
 @Component({
 	selector: "app-add-article",
 	templateUrl: "./add-article.component.html",
-	styleUrls: ["./add-article.component.css"],
+	styleUrls: ["./add-article.component.scss"],
 	animations: [routerTransition()]
 })
 export class AddArticleComponent implements OnInit {
