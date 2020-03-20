@@ -7,13 +7,17 @@ import { ConvertToTableFilter } from "src/app/utils";
 import { Router } from "@angular/router";
 import { ToastrService } from "ngx-toastr";
 import * as _ from "lodash";
+import { BaseClass } from "src/app/models/BaseClass";
+import Ability from "../../abilityConfig/ability";
+import { Common } from "src/app/Constants/Common";
+
 @Component({
 	selector: "app-manage-article",
 	templateUrl: "./manage-article.component.html",
 	styleUrls: ["./manage-article.component.scss"],
 	animations: [routerTransition()]
 })
-export class ManageArticleComponent implements OnInit {
+export class ManageArticleComponent extends BaseClass {
 	loadingIndicator = true;
 	reorderable = true;
 	ColumnMode = ColumnMode;
@@ -36,7 +40,27 @@ export class ManageArticleComponent implements OnInit {
 		private articleService: ArticleService,
 		private router: Router,
 		private toast: ToastrService
-	) {}
+	) {
+		super();
+		this.CanCreate = Ability.can(
+			Common.Actions.CAN_CREATE,
+			Common.Modules.ARTICLE
+		);
+		this.CanDelete = Ability.can(
+			Common.Actions.CAN_DELETE,
+			Common.Modules.ARTICLE
+		);
+		this.CanRead = Ability.can(Common.Actions.CAN_READ, Common.Modules.ARTICLE);
+		this.CanExport = Ability.can(
+			Common.Actions.CAN_EXPORT,
+			Common.Modules.ARTICLE
+		);
+		this.CanUpdate = Ability.can(
+			Common.Actions.CAN_UPDATE,
+			Common.Modules.ARTICLE
+		);
+		this.CanActions = this.CanDelete || this.CanUpdate;
+	}
 
 	ngOnInit() {
 		this.pageCallback({ offset: 0 });

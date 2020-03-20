@@ -6,6 +6,7 @@ import { Router, ActivatedRoute } from "@angular/router";
 import { ToastrService } from "ngx-toastr";
 import { IArticleData } from "src/api/types";
 import { parseTime } from "../../utils";
+
 @Component({
 	selector: "app-add-article",
 	templateUrl: "./add-article.component.html",

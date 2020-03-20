@@ -2,7 +2,8 @@
   <app-page-header [heading]="'Manage Article'" [icon]="'fa-table'"></app-page-header>
   <div class="row">
     <div class="col col-md-12">
-      <button class="btn btn-xs btn-info" [routerLink]="['/add-article']" routerLinkActive="router-link-active">
+      <button class="btn btn-xs btn-info" [routerLink]="['/add-article']" routerLinkActive="router-link-active"
+        *ngIf="CanCreate">
         <i class="fa fa-plus"></i>
       </button>
     </div>
@@ -39,12 +40,12 @@
             {{ value }}
           </ng-template>
         </ngx-datatable-column>
-        <ngx-datatable-column name="Actions" sortable="false" prop="id">
+        <ngx-datatable-column name="Actions" sortable="false" prop="id" *ngIf="CanActions">
           <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
-            <button (click)="removeArticle(row)" class="btn btn-primary btn-xs mr-2">
+            <button (click)="removeArticle(row)" class="btn btn-primary btn-xs mr-2" *ngIf="CanDelete">
               <i class="fa fa-ban"></i>
             </button>
-            <button (click)="editArticle(row)" class="btn btn-xs btn-danger">
+            <button (click)="editArticle(row)" class="btn btn-xs btn-danger" *ngIf="CanUpdate">
               <i class="fa fa-check"></i>
             </button>
           </ng-template>
