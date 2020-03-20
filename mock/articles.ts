@@ -7,7 +7,7 @@ const articleCount = 100;
 const mockFullContent =
 	'<p>I am testing data, I am testing data.</p><p><img src="https://wpimg.wallstcn.com/4c69009c-0fd4-4153-b112-6cb53d1cf943"></p>';
 
-for (let i = 0; i < articleCount; i++) {
+for (let i = 1; i < articleCount; i++) {
 	articleList.push({
 		id: i,
 		status: faker.random.arrayElement(["published", "draft", "deleted"]),

@@ -3,9 +3,10 @@ import { routerTransition } from "../../router.animations";
 import { ColumnMode } from "@swimlane/ngx-datatable";
 import { ArticleService } from "src/app/services/article.service";
 import { IArticleData } from "src/api/types";
-import { HttpParams } from "@angular/common/http";
 import { ConvertToTableFilter } from "src/app/utils";
-import { map } from "rxjs/operators";
+import { Router } from "@angular/router";
+import { ToastrService } from "ngx-toastr";
+import * as _ from "lodash";
 @Component({
 	selector: "app-manage-article",
 	templateUrl: "./manage-article.component.html",
@@ -31,18 +32,33 @@ export class ManageArticleComponent implements OnInit {
 		offset: 0
 	};
 
-	constructor(private articleService: ArticleService) {}
+	constructor(
+		private articleService: ArticleService,
+		private router: Router,
+		private toast: ToastrService
+	) {}
 
 	ngOnInit() {
-		this.pageCallback({ offset: 1 });
+		this.pageCallback({ offset: 0 });
 	}
 
 	editArticle(data: IArticleData) {
+		this.router.navigate(["add-article"], { queryParams: { id: data.id } });
 		console.log(data);
 	}
 
-	removeArticle(data: IArticleData) {
-		console.log(data);
+	removeArticle(articleData: IArticleData) {
+		console.log(articleData);
+		var result = confirm("Are you Sure?");
+		if (result) {
+			this.articleService.removeArticles(articleData.id).subscribe(data => {
+				_.remove(this.rows, function(currentObject) {
+					return currentObject.id === articleData.id;
+				});
+
+				this.toast.success("Article Deleted Successfully!!");
+			});
+		}
 	}
 
 	pageCallback(pageInfo: {
@@ -51,7 +67,7 @@ export class ManageArticleComponent implements OnInit {
 		limit?: number;
 		offset?: number;
 	}) {
-		this.listQuery.page = pageInfo.offset;
+		this.listQuery.page = pageInfo.offset + 1;
 		this.reloadTable();
 	}
 

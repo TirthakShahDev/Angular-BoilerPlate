@@ -3,6 +3,7 @@ import { Routes, RouterModule } from "@angular/router";
 import { LayoutComponent } from "./layout.component";
 import { AuthGuard } from "../shared/guard/auth.guard";
 import { Common } from "../Constants/Common";
+import { AddArticleComponent } from "./add-article/add-article.component";
 
 const routes: Routes = [
 	{
@@ -70,6 +71,13 @@ const routes: Routes = [
 				loadChildren: () =>
 					import("../access-denied/access-denied.module").then(
 						m => m.AccessDeniedModule
+					)
+			},
+			{
+				path: "add-article",
+				loadChildren: () =>
+					import("./add-article/add-article.module").then(
+						m => m.AddArticleModule
 					)
 			}
 		]

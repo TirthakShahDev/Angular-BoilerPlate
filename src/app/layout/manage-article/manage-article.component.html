@@ -2,6 +2,13 @@
   <app-page-header [heading]="'Manage Article'" [icon]="'fa-table'"></app-page-header>
   <div class="row">
     <div class="col col-md-12">
+      <button class="btn btn-xs btn-info" [routerLink]="['/add-article']" routerLinkActive="router-link-active">
+        <i class="fa fa-plus"></i>
+      </button>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col col-md-12">
       <ngx-datatable [rows]="rows" class="bootstrap" [columnMode]="'force'" [headerHeight]="50" [footerHeight]="50"
         [rowHeight]="'auto'" [reorderable]="reorderable" (page)="pageCallback($event)" (sort)="sortCallback($event)"
         [externalPaging]="true" [externalSorting]="true" [count]="page.count" [offset]="page.offset"

@@ -1,0 +1,70 @@
+<div [@routerTransition]>
+  <app-page-header [heading]="buttonText" [icon]="'fa-plus'"></app-page-header>
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card mb-3">
+        <div class="card-header">Add Article</div>
+        <div class="card-body">
+          <form [formGroup]="addarticleForm" (ngSubmit)="onSubmit()">
+            <div class="form-row">
+              <div class="form-group col-6">
+                <label>Title</label>
+                <input type="text" formControlName="title" class="form-control"
+                  [ngClass]="{ 'is-invalid': submitted && f.title.errors }" [(ngModel)]="articleModel.title" />
+                <div *ngFor="let validation of validation_messages.Title" class="invalid-feedback">
+                  <div *ngIf="addarticleForm.get('title').hasError(validation.type)">
+                    {{validation.message}}
+                  </div>
+                </div>
+              </div>
+              <div class="form-group col-6">
+                <label>Time Stamp</label>
+                <!-- <input type="text" formControlName="timestamp" class="form-control"
+                  [ngClass]="{ 'is-invalid': submitted && f.timestamp.errors }" [(ngModel)]="articleModel.timestamp" /> -->
+                <div class="input-group datepicker-input">
+                  <input type="text" class="form-control" placeholder="dd/mm/yyyy" formControlName="timestamp"
+                    [(ngModel)]="articleModel.timestamp" ngbDatepicker #d="ngbDatepicker"
+                    [ngClass]="{ 'is-invalid': submitted && f.timestamp.errors }">
+                  <button class="input-group-addon" (click)="d.toggle()" type="button">
+                    <span class="fa fa-calendar"></span>
+                  </button>
+                  <div *ngFor="let validation of validation_messages.timestamp" class="invalid-feedback">
+                    <div *ngIf="addarticleForm.get('timestamp').hasError(validation.type)">
+                      {{validation.message}}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group col-6">
+                <label>Author</label>
+                <input type="text" formControlName="author" class="form-control"
+                  [ngClass]="{ 'is-invalid': submitted && f.author.errors }" [(ngModel)]="articleModel.author" />
+                <div *ngFor="let validation of validation_messages.author" class="invalid-feedback">
+                  <div *ngIf="addarticleForm.get('author').hasError(validation.type)">
+                    {{validation.message}}
+                  </div>
+                </div>
+              </div>
+              <div class="form-group col-6
+              ">
+                <label>Reviewer</label>
+                <input type="text" formControlName="reviewer" class="form-control"
+                  [ngClass]="{ 'is-invalid': submitted && f.reviewer.errors }" [(ngModel)]="articleModel.reviewer" />
+                <div *ngFor="let validation of validation_messages.reviewer" class="invalid-feedback">
+                  <div *ngIf="addarticleForm.get('reviewer').hasError(validation.type)">
+                    {{validation.message}}
+                  </div>
+                </div>
+              </div>
+              <div class="text-center">
+                <button class="btn btn-primary mr-1">{{buttonText}}</button>
+                <button class="btn btn-primary mr-1" [routerLink]="['/manage-article']"
+                  routerLinkActive="router-link-active">Back</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

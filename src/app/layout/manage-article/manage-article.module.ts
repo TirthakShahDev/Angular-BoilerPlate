@@ -5,6 +5,7 @@ import { ManageArticleRoutingModule } from "./manage-article-routing.module";
 import { ManageArticleComponent } from "./manage-article.component";
 import { NgxDatatableModule } from "@swimlane/ngx-datatable";
 import { PageHeaderModule } from "src/app/shared";
+import { AddArticleComponent } from "../add-article/add-article.component";
 
 @NgModule({
 	imports: [
