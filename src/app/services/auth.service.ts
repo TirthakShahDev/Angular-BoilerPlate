@@ -64,6 +64,7 @@ export class AuthService {
 	logout() {
 		localStorage.removeItem("currentUser");
 		localStorage.removeItem("token");
+		localStorage.removeItem("abilities");
 	}
 
 	getUserProfile(id: any): Observable<any> {
